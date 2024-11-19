@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find Mutual Friends</title>
+</head>
+<body>
+    <h1>Find Mutual Friends</h1>
+
+    {% if error %}
+
+        <p style="color: red;">{{ error }}</p>
+
+    {% else %}
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <label for="edgelist_file">Upload Edgelist File:</label>
+
+            <input type="file" name="edgelist_file" id="edgelist_file" accept=".edgelist" required>
+
+            <br>
+
+            <label for="node1">Node 1:</label>
+
+            <input type="text" name="node1" id="node1" required>
+
+            <br>
+
+            <label for="node2">Node 2:</label>
+
+            <input type="text" name="node2" id="node2" required>
+
+            <br>
+
+            <input type="submit" value="Find Mutual Friends">
+
+        </form>
+
+        {% if adjacency_list %}
+
+            <h2>Results</h2>
+
+            <p>Adjacency List (for reference):</p>
+
+            <pre>{{ adjacency_list | tojson(indent=2) }}</pre>  
+
+            {% if mutual_friends %}
+
+                <p>Mutual friends between <strong>{{ node1 }}</strong> and <strong>{{ node2 }}</strong>: {{ mutual_friends }}</p>
+
+            {% else %}
+
+                <p>No mutual friends found between <strong>{{ node1 }}</strong> and <strong>{{ node2 }}</strong>.</p>
+
+            {% endif %}
+
+        {% endif %}
+
+    {% endif %}
+    <hr>
+
+    <h1>Community Detection Tool</h1>
+
+    <!-- File Upload Form -->
+    <form action="/community_detection" method="post" enctype="multipart/form-data">
+        <label for="file">Upload Graph Dataset (Edge List):</label>
+        <input type="file" id="file" name="file" required><br><br>
+        <button type="submit">Detect Communities</button>
+    </form>
+
+    <!-- Display Results -->
+    {% if communities %}
+        <h2>Node to Community Mapping</h2>
+        <ul>
+            {% for node, community in communities.items() %}
+                <li>Node {{ node }}: Community {{ community }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Community Detection Visualization</h2>
+        <img src="{{ image }}" alt="Community Graph" style="width:80%; height:auto;">
+    {% elif error %}
+        <h3 style="color: red;">{{ error }}</h3>
+    {% endif %}
+
+    <hr>
+     
+    <h1>Centrality Measures Tool</h1>
+
+     <!-- File Upload Form  -->
+    <form action="/centrality" method="post" enctype="multipart/form-data">
+        <label for="file">Upload Graph Dataset (Edge List):</label>
+        <input type="file" id="file" name="file" required><br><br>
+        <button type="submit">Calculate Centrality</button>
+    </form>
+
+     <!-- Display Centrality Results  -->
+    {% if degree %}
+        <h2>Centrality Measures</h2>
+        <h3>Degree Centrality</h3>
+        <ul>
+            {% for node, value in degree.items() %}
+                <li>Node {{ node }}: {{ "%.4f"|format(value) }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Closeness Centrality</h3>
+        <ul>
+            {% for node, value in closeness.items() %}
+                <li>Node {{ node }}: {{ "%.4f"|format(value) }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Betweenness Centrality</h3>
+        <ul>
+            {% for node, value in betweenness.items() %}
+                <li>Node {{ node }}: {{ "%.4f"|format(value) }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Eigenvector Centrality</h3>
+        <ul>
+            {% for node, value in eigenvector.items() %}
+                <li>Node {{ node }}: {{ "%.4f"|format(value) }}</li>
+            {% endfor %}
+        </ul>
+        <h2>Graph Visualization</h2>
+        <img src="{{ image }}" alt="Centrality Graph" style="width:80%; height:auto;">
+    {% elif error %}
+        <h3 style="color: red;">{{ error }}</h3>
+    {% endif %} 
+
+    <hr>
+<h1>Edge Prediction Tool</h1>
+
+    <!-- Graph Upload Form -->
+    <h2>Upload Graph Dataset</h2>
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="file">Upload Graph Dataset (Edge List):</label>
+        <input type="file" id="file" name="file" required><br><br>
+        <button type="submit">Upload Graph</button>
+    </form>
+
+    {% if message %}
+        <h3 style="color: green;">{{ message }}</h3>
+    {% endif %}
+
+    <!-- Edge Prediction Form -->
+    <h2>Predict Edge</h2>
+    <form action="/predict" method="post">
+        <label for="node1">Enter Node 1:</label>
+        <input type="text" id="node1" name="node1" required><br><br>
+        <label for="node2">Enter Node 2:</label>
+        <input type="text" id="node2" name="node2" required><br><br>
+        <button type="submit">Predict Edge</button>
+    </form>
+
+    {% if score is not none %}
+        <h3>Edge Prediction Results</h3>
+        <p>Score between {{ node1 }} and {{ node2 }}: {{ score }}</p>
+        <h4>Common Neighbors:</h4>
+        <ul>
+            {% for neighbor in common_neighbors %}
+                <li>{{ neighbor }}</li>
+            {% endfor %}
+        </ul>
+    {% elif error %}
+        <h3 style="color: red;">{{ error }}</h3>
+    {% endif %}
+</body>
+</html>

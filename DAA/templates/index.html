@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Network Analysis Tool</title>
+</head>
+<body>
+    <h1>Social Network Analysis Tool</h1>
+
+    <h2>Mutual Friends</h2>
+    <form action="/mutual_friends" method="post">
+        <label for="node1">Enter Node 1:</label>
+        <input type="text" id="node1" name="node1" required><br><br>
+        <label for="node2">Enter Node 2:</label>
+        <input type="text" id="node2" name="node2" required><br><br>
+        <button type="submit">Find Mutual Friends</button>
+    </form>
+    {% if mutual_friends %}
+        <h3>Mutual Friends between {{ node1 }} and {{ node2 }}:</h3>
+        <ul>
+            {% for friend in mutual_friends %}
+                <li>{{ friend }}</li>
+            {% endfor %}
+        </ul>
+    {% elif error %}
+        <h3 style="color: red;">{{ error }}</h3>
+    {% endif %}
+
+    <hr>
+
+    <h2>Community Detection</h2>
+    <form action="/community_detection" method="post" enctype="multipart/form-data">
+        <label for="file">Upload Dataset (Edge List):</label>
+        <input type="file" id="file" name="file" required><br><br>
+        <button type="submit">Analyze Communities</button>
+    </form>
+    {% if communities %}
+        <h3>Node to Community Mapping:</h3>
+        <ul>
+            {% for node, community in communities.items() %}
+                <li>Node {{ node }}: Community {{ community }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Graph Visualization:</h3>
+        <img src="{{ image }}" alt="Community Graph" style="width:80%; height:auto;">
+    {% endif %}
+
+    <hr>
+
+    <h1>Centrality Measures Tool</h1>
+
+    <!-- Centrality Measure Form -->
+    <form action="/centrality_measures" method="post">
+        <label for="centrality_measure">Select Centrality Measure:</label>
+        <select id="centrality_measure" name="centrality_measure" required>
+            <option value="Degree Centrality">Degree Centrality</option>
+            <option value="Betweenness Centrality">Betweenness Centrality</option>
+            <option value="Closeness Centrality">Closeness Centrality</option>
+            <option value="Eigenvector Centrality">Eigenvector Centrality</option>
+        </select>
+        <br><br>
+
+        <label for="top_n">Number of Top Nodes (Default: 5):</label>
+        <input type="number" id="top_n" name="top_n" min="1" placeholder="5">
+        <br><br>
+
+        <button type="submit">Calculate Centrality</button>
+    </form>
+    {% if selected_measure %}
+    <h2>Top Nodes by {{ selected_measure }}</h2>
+    <ul>
+        {% for node, score in top_nodes %}
+            <li>Node {{ node }}: {{ "%.4f"|format(score) }}</li>
+        {% endfor %}
+    </ul>
+    <h3>Graph Visualization:</h3>
+    <img src="{{ image }}" alt="Centrality Graph" style="width:80%; height:auto;">
+{% endif %}
+
+{% if error %}
+    <h3 style="color: red;">{{ error }}</h3>
+{% endif %}
+</body>
+</html>
