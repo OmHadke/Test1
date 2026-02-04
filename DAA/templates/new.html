@@ -1,168 +1,711 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Find Mutual Friends</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Restaurant Management System (RMS)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #0f172a;
+      --surface: #0b1227;
+      --card: #111c3d;
+      --muted: #94a3b8;
+      --text: #e2e8f0;
+      --accent: #38bdf8;
+      --accent-2: #f97316;
+      --success: #22c55e;
+      --shadow: 0 25px 60px rgba(15, 23, 42, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0%, #0f172a 55%, #020617 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1120px, 92vw);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      z-index: 10;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      color: transparent;
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.4rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.75rem 1.4rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #020617;
+      box-shadow: 0 15px 30px rgba(56, 189, 248, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      border-color: rgba(148, 163, 184, 0.5);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .hero {
+      padding: 4.5rem 0 3.5rem;
+      display: grid;
+      gap: 3rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 4vw, 3.6rem);
+      line-height: 1.1;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.8));
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .hero-card ul {
+      list-style: none;
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .hero-card li {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .section {
+      padding: 3.5rem 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+    }
+
+    .section-title span {
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 999px;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.7);
+    }
+
+    .grid-3 {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.7rem;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.15);
+      box-shadow: 0 12px 24px rgba(15, 23, 42, 0.25);
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent);
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .tab-btn.active {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--text);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    .tab-panel {
+      display: none;
+      gap: 1rem;
+    }
+
+    .tab-panel.active {
+      display: grid;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .timeline-item span {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--success);
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+    }
+
+    .stack {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .stack .card {
+      background: rgba(15, 23, 42, 0.65);
+    }
+
+    .forms {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+
+    form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    label {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    input,
+    select,
+    textarea {
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(15, 23, 42, 0.8);
+      color: var(--text);
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .qr-panel {
+      background: linear-gradient(120deg, rgba(249, 115, 22, 0.2), rgba(59, 130, 246, 0.2));
+      border-radius: 18px;
+      padding: 1.5rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .qr-code {
+      width: 110px;
+      height: 110px;
+      border-radius: 12px;
+      background: repeating-linear-gradient(45deg, rgba(226, 232, 240, 0.1), rgba(226, 232, 240, 0.1) 6px, rgba(15, 23, 42, 0.9) 6px, rgba(15, 23, 42, 0.9) 12px);
+      border: 1px dashed rgba(226, 232, 240, 0.3);
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      font-size: 0.7rem;
+    }
+
+    .accordion {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .accordion button {
+      width: 100%;
+      text-align: left;
+      padding: 1rem 1.2rem;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      background: rgba(15, 23, 42, 0.65);
+      color: var(--text);
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .accordion-content {
+      display: none;
+      padding: 0 1.2rem 1rem;
+      color: var(--muted);
+    }
+
+    .accordion-content.active {
+      display: block;
+    }
+
+    footer {
+      padding: 3rem 0;
+      border-top: 1px solid rgba(148, 163, 184, 0.15);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h1>Find Mutual Friends</h1>
+  <header>
+    <div class="container nav">
+      <div class="logo">
+        <span>RMS</span>
+        <strong>Restaurant Management System</strong>
+      </div>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#journey">User Journey</a>
+        <a href="#stack">Tech Stack</a>
+        <a href="#register">Registration</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a class="btn btn-secondary" href="#register">Get Started</a>
+    </div>
+  </header>
 
-    {% if error %}
-
-        <p style="color: red;">{{ error }}</p>
-
-    {% else %}
-
-        <form method="POST" enctype="multipart/form-data">
-
-            <label for="edgelist_file">Upload Edgelist File:</label>
-
-            <input type="file" name="edgelist_file" id="edgelist_file" accept=".edgelist" required>
-
-            <br>
-
-            <label for="node1">Node 1:</label>
-
-            <input type="text" name="node1" id="node1" required>
-
-            <br>
-
-            <label for="node2">Node 2:</label>
-
-            <input type="text" name="node2" id="node2" required>
-
-            <br>
-
-            <input type="submit" value="Find Mutual Friends">
-
-        </form>
-
-        {% if adjacency_list %}
-
-            <h2>Results</h2>
-
-            <p>Adjacency List (for reference):</p>
-
-            <pre>{{ adjacency_list | tojson(indent=2) }}</pre>  
-
-            {% if mutual_friends %}
-
-                <p>Mutual friends between <strong>{{ node1 }}</strong> and <strong>{{ node2 }}</strong>: {{ mutual_friends }}</p>
-
-            {% else %}
-
-                <p>No mutual friends found between <strong>{{ node1 }}</strong> and <strong>{{ node2 }}</strong>.</p>
-
-            {% endif %}
-
-        {% endif %}
-
-    {% endif %}
-    <hr>
-
-    <h1>Community Detection Tool</h1>
-
-    <!-- File Upload Form -->
-    <form action="/community_detection" method="post" enctype="multipart/form-data">
-        <label for="file">Upload Graph Dataset (Edge List):</label>
-        <input type="file" id="file" name="file" required><br><br>
-        <button type="submit">Detect Communities</button>
-    </form>
-
-    <!-- Display Results -->
-    {% if communities %}
-        <h2>Node to Community Mapping</h2>
+  <main>
+    <section class="hero container">
+      <div>
+        <p class="pill">AI + QR Enabled Dining Experience</p>
+        <h1>Digitize your restaurant experience with intelligent menus, fast booking, and data-driven growth.</h1>
+        <p>
+          RMS connects diners and restaurants through dynamic menus, AI meal recognition, secure payments,
+          and real-time analytics. Restaurants upload menu images with ingredients, cooking methodology,
+          calorie counts, and recommendations, then receive a unique QR code that shares the menu instantly.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#register">Launch Restaurant</a>
+          <a class="btn btn-secondary" href="#features">Explore Features</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>Experience Map</h2>
         <ul>
-            {% for node, community in communities.items() %}
-                <li>Node {{ node }}: Community {{ community }}</li>
-            {% endfor %}
+          <li>✔ Digital menu with nutrition + allergens</li>
+          <li>✔ Table booking & pre-ordering</li>
+          <li>✔ AI meal recognition from photos</li>
+          <li>✔ Secure multi-gateway payments</li>
+          <li>✔ Promotions, loyalty, and analytics</li>
         </ul>
-        <h2>Community Detection Visualization</h2>
-        <img src="{{ image }}" alt="Community Graph" style="width:80%; height:auto;">
-    {% elif error %}
-        <h3 style="color: red;">{{ error }}</h3>
-    {% endif %}
+      </div>
+    </section>
 
-    <hr>
-     
-    <h1>Centrality Measures Tool</h1>
+    <section id="features" class="section container">
+      <div class="section-title">
+        <span></span>
+        <h2>Solution Highlights</h2>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Smart Digital Menus</h3>
+          <p>Menus include images, ingredients, calorie data, allergen warnings, and chef recommendations.</p>
+        </div>
+        <div class="card">
+          <h3>AI-Powered Recognition</h3>
+          <p>Capture a menu photo to identify meals. If unmatched, the AI suggests similar dishes.</p>
+        </div>
+        <div class="card">
+          <h3>Unified Booking + Payments</h3>
+          <p>Table reservations, pre-orders, and payments happen in one streamlined experience.</p>
+        </div>
+        <div class="card">
+          <h3>Restaurant Analytics</h3>
+          <p>Gain insights on peak hours, popular dishes, revenue trends, and customer sentiment.</p>
+        </div>
+        <div class="card">
+          <h3>Targeted Promotions</h3>
+          <p>Launch discounts, loyalty rewards, and neighborhood offers to boost engagement.</p>
+        </div>
+        <div class="card">
+          <h3>Operational Dashboards</h3>
+          <p>Manage menus, orders, tables, and staff from a single, responsive dashboard.</p>
+        </div>
+      </div>
+    </section>
 
-     <!-- File Upload Form  -->
-    <form action="/centrality" method="post" enctype="multipart/form-data">
-        <label for="file">Upload Graph Dataset (Edge List):</label>
-        <input type="file" id="file" name="file" required><br><br>
-        <button type="submit">Calculate Centrality</button>
-    </form>
+    <section id="journey" class="section container">
+      <div class="section-title">
+        <span></span>
+        <h2>User Journey</h2>
+      </div>
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="customer">Customer App</button>
+        <button class="tab-btn" data-tab="restaurant">Restaurant Dashboard</button>
+      </div>
+      <div class="tab-panel active" id="customer">
+        <div class="card">
+          <h3>1. Discover & Scan</h3>
+          <p>Users find nearby restaurants, scan the QR code, and access digital menus instantly.</p>
+        </div>
+        <div class="card">
+          <h3>2. Personalize Orders</h3>
+          <p>Filter by diet, allergens, calories, or recommended dishes based on preferences.</p>
+        </div>
+        <div class="card">
+          <h3>3. Book & Pay</h3>
+          <p>Reserve tables, pre-order meals, and pay securely through integrated gateways.</p>
+        </div>
+      </div>
+      <div class="tab-panel" id="restaurant">
+        <div class="card">
+          <h3>1. Upload Menu Assets</h3>
+          <p>Restaurants upload dish photos, ingredients, cooking methodology, and nutrition facts.</p>
+        </div>
+        <div class="card">
+          <h3>2. QR Code Publish</h3>
+          <p>Each restaurant receives a unique QR code tied to the updated menu database.</p>
+        </div>
+        <div class="card">
+          <h3>3. Operate & Analyze</h3>
+          <p>Track bookings, orders, and reviews with analytics dashboards and AI insights.</p>
+        </div>
+      </div>
+    </section>
 
-     <!-- Display Centrality Results  -->
-    {% if degree %}
-        <h2>Centrality Measures</h2>
-        <h3>Degree Centrality</h3>
-        <ul>
-            {% for node, value in degree.items() %}
-                <li>Node {{ node }}: {{ "%.4f"|format(value) }}</li>
-            {% endfor %}
-        </ul>
-        <h3>Closeness Centrality</h3>
-        <ul>
-            {% for node, value in closeness.items() %}
-                <li>Node {{ node }}: {{ "%.4f"|format(value) }}</li>
-            {% endfor %}
-        </ul>
-        <h3>Betweenness Centrality</h3>
-        <ul>
-            {% for node, value in betweenness.items() %}
-                <li>Node {{ node }}: {{ "%.4f"|format(value) }}</li>
-            {% endfor %}
-        </ul>
-        <h3>Eigenvector Centrality</h3>
-        <ul>
-            {% for node, value in eigenvector.items() %}
-                <li>Node {{ node }}: {{ "%.4f"|format(value) }}</li>
-            {% endfor %}
-        </ul>
-        <h2>Graph Visualization</h2>
-        <img src="{{ image }}" alt="Centrality Graph" style="width:80%; height:auto;">
-    {% elif error %}
-        <h3 style="color: red;">{{ error }}</h3>
-    {% endif %} 
+    <section class="section container">
+      <div class="section-title">
+        <span></span>
+        <h2>Implementation Plan</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <span>1</span>
+          <div>
+            <h3>Requirement & UX Research</h3>
+            <p>Define the must-have workflows for diners and restaurant operators.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span>2</span>
+          <div>
+            <h3>Database & API Design</h3>
+            <p>Schema for menus, orders, bookings, reviews, and analytics pipelines.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span>3</span>
+          <div>
+            <h3>Frontend Delivery</h3>
+            <p>Responsive customer app + dashboard, with delightful UI micro-interactions.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span>4</span>
+          <div>
+            <h3>AI & Integrations</h3>
+            <p>Meal recognition model, OCR pipeline, payment gateway, and POS integrations.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <hr>
-<h1>Edge Prediction Tool</h1>
+    <section id="stack" class="section container">
+      <div class="section-title">
+        <span></span>
+        <h2>Suggested Technology Stack</h2>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h3>Frontend</h3>
+          <p>React.js / Next.js, Tailwind CSS, TypeScript</p>
+        </div>
+        <div class="card">
+          <h3>Backend</h3>
+          <p>Node.js, Express.js / Nest.js, REST APIs</p>
+        </div>
+        <div class="card">
+          <h3>Database</h3>
+          <p>PostgreSQL / MongoDB with analytics extensions</p>
+        </div>
+        <div class="card">
+          <h3>AI & OCR</h3>
+          <p>Python, TensorFlow, OpenCV, Tesseract.js</p>
+        </div>
+        <div class="card">
+          <h3>Payments</h3>
+          <p>Stripe, Razorpay, PayPal with tokenized checkout</p>
+        </div>
+        <div class="card">
+          <h3>Infrastructure</h3>
+          <p>AWS / Vercel / Firebase, analytics via Chart.js</p>
+        </div>
+      </div>
+    </section>
 
-    <!-- Graph Upload Form -->
-    <h2>Upload Graph Dataset</h2>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <label for="file">Upload Graph Dataset (Edge List):</label>
-        <input type="file" id="file" name="file" required><br><br>
-        <button type="submit">Upload Graph</button>
-    </form>
+    <section id="register" class="section container">
+      <div class="section-title">
+        <span></span>
+        <h2>Registration & Menu Intake</h2>
+      </div>
+      <div class="forms">
+        <div class="card">
+          <h3>Restaurant Onboarding</h3>
+          <form>
+            <div>
+              <label for="restaurant-name">Restaurant Name</label>
+              <input id="restaurant-name" type="text" placeholder="Spice Garden" required>
+            </div>
+            <div>
+              <label for="restaurant-location">Location</label>
+              <input id="restaurant-location" type="text" placeholder="City, Neighborhood" required>
+            </div>
+            <div>
+              <label for="restaurant-menu">Menu Images (upload)</label>
+              <input id="restaurant-menu" type="file" multiple>
+            </div>
+            <div>
+              <label for="restaurant-details">Ingredients, methodology & calorie notes</label>
+              <textarea id="restaurant-details" placeholder="Example: Grilled salmon, olive oil, herbs, 520 kcal..."></textarea>
+            </div>
+            <button class="btn btn-primary" type="button">Generate QR Menu</button>
+          </form>
+        </div>
+        <div class="card">
+          <h3>Customer Registration</h3>
+          <form>
+            <div>
+              <label for="customer-name">Full Name</label>
+              <input id="customer-name" type="text" placeholder="Ayesha Rahman" required>
+            </div>
+            <div>
+              <label for="customer-email">Email</label>
+              <input id="customer-email" type="email" placeholder="you@email.com" required>
+            </div>
+            <div>
+              <label for="customer-preferences">Diet Preferences</label>
+              <select id="customer-preferences">
+                <option>Omnivore</option>
+                <option>Vegetarian</option>
+                <option>Vegan</option>
+                <option>Gluten-Free</option>
+              </select>
+            </div>
+            <div>
+              <label for="customer-goals">Health Goals</label>
+              <textarea id="customer-goals" placeholder="Low sugar, high protein, allergy: peanuts"></textarea>
+            </div>
+            <button class="btn btn-secondary" type="button">Create Profile</button>
+          </form>
+        </div>
+        <div class="qr-panel">
+          <h3>QR Code Preview</h3>
+          <p>Once the restaurant uploads menu data, RMS generates a unique QR code that links to the live menu.</p>
+          <div class="qr-code">QR Code</div>
+          <p class="pill">Instantly updates with new menu items</p>
+        </div>
+      </div>
+    </section>
 
-    {% if message %}
-        <h3 style="color: green;">{{ message }}</h3>
-    {% endif %}
+    <section id="faq" class="section container">
+      <div class="section-title">
+        <span></span>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+      <div class="accordion">
+        <div>
+          <button type="button" class="accordion-btn">How does AI menu recognition work?</button>
+          <div class="accordion-content">
+            The AI module combines OCR and CNN models to recognize dishes from images, then maps them to menu data.
+          </div>
+        </div>
+        <div>
+          <button type="button" class="accordion-btn">Can restaurants update menus anytime?</button>
+          <div class="accordion-content">
+            Yes. Updates are reflected instantly in the QR-linked menu and dashboard analytics.
+          </div>
+        </div>
+        <div>
+          <button type="button" class="accordion-btn">What analytics are available?</button>
+          <div class="accordion-content">
+            RMS tracks order volume, revenue, peak hours, popular dishes, and customer feedback sentiment.
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    <!-- Edge Prediction Form -->
-    <h2>Predict Edge</h2>
-    <form action="/predict" method="post">
-        <label for="node1">Enter Node 1:</label>
-        <input type="text" id="node1" name="node1" required><br><br>
-        <label for="node2">Enter Node 2:</label>
-        <input type="text" id="node2" name="node2" required><br><br>
-        <button type="submit">Predict Edge</button>
-    </form>
+  <footer>
+    <div class="container">
+      <p>Restaurant Management System • Bringing data, dining, and delight together.</p>
+    </div>
+  </footer>
 
-    {% if score is not none %}
-        <h3>Edge Prediction Results</h3>
-        <p>Score between {{ node1 }} and {{ node2 }}: {{ score }}</p>
-        <h4>Common Neighbors:</h4>
-        <ul>
-            {% for neighbor in common_neighbors %}
-                <li>{{ neighbor }}</li>
-            {% endfor %}
-        </ul>
-    {% elif error %}
-        <h3 style="color: red;">{{ error }}</h3>
-    {% endif %}
+  <script>
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabPanels = document.querySelectorAll(".tab-panel");
+
+    tabButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        tabButtons.forEach((item) => item.classList.remove("active"));
+        tabPanels.forEach((panel) => panel.classList.remove("active"));
+
+        button.classList.add("active");
+        const target = document.getElementById(button.dataset.tab);
+        if (target) {
+          target.classList.add("active");
+        }
+      });
+    });
+
+    const accordionButtons = document.querySelectorAll(".accordion-btn");
+    accordionButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const content = button.nextElementSibling;
+        if (!content) {
+          return;
+        }
+        const isOpen = content.classList.contains("active");
+        document.querySelectorAll(".accordion-content").forEach((panel) => {
+          panel.classList.remove("active");
+        });
+        if (!isOpen) {
+          content.classList.add("active");
+        }
+      });
+    });
+  </script>
 </body>
 </html>
