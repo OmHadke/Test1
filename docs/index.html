@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant Management System (RMS)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/rms.css" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="container nav__inner">
+        <div class="brand">
+          <span class="brand__dot"></span>
+          <div>
+            <h1>RMS</h1>
+            <p>Restaurant Management System</p>
+          </div>
+        </div>
+        <nav class="nav__links">
+          <a href="#overview">Overview</a>
+          <a href="#phases">Phases</a>
+          <a href="#flows">Flows</a>
+          <a href="#stack">Tech Stack</a>
+          <a href="#ui">UI Plan</a>
+        </nav>
+        <a class="btn btn--ghost" href="#ui">Build MVP</a>
+      </div>
+    </header>
+
+    <main>
+      <section id="overview" class="hero">
+        <div class="container hero__grid">
+          <div>
+            <p class="eyebrow">Scan. Order. Delight.</p>
+            <h2>Build a QR-first dining experience with analytics-ready operations.</h2>
+            <p class="lead">
+              RMS connects restaurants and customers with digital menus, smart booking, and
+              smooth ordering flows. Start with a strong MVP, then layer in AI recognition
+              and analytics.
+            </p>
+            <div class="hero__actions">
+              <a class="btn btn--primary" href="#phases">See MVP Roadmap</a>
+              <a class="btn btn--secondary" href="#ui">Design UI Flow</a>
+            </div>
+          </div>
+          <div class="hero__card">
+            <h3>MVP Success Checklist</h3>
+            <ul>
+              <li>Restaurant registration + QR generation</li>
+              <li>Dish uploads with nutrition + recommendations</li>
+              <li>QR-based customer menu + order flow</li>
+              <li>Table booking + basic payment</li>
+              <li>Ratings and reviews</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="phases" class="section">
+        <div class="container">
+          <div class="section__title">
+            <h3>Phase-by-Phase Build Plan</h3>
+            <p>Start lean for exams. Expand once the MVP is stable.</p>
+          </div>
+          <div class="grid grid--3">
+            <article class="card">
+              <span class="tag tag--primary">Phase 1</span>
+              <h4>MVP (Semester Safe)</h4>
+              <ul>
+                <li>Restaurant + customer roles</li>
+                <li>Menu upload & QR code</li>
+                <li>Order + booking</li>
+                <li>Pay at restaurant / Razorpay</li>
+                <li>Ratings & reviews</li>
+              </ul>
+            </article>
+            <article class="card">
+              <span class="tag tag--secondary">Phase 2</span>
+              <h4>AI Extension</h4>
+              <ul>
+                <li>Food image recognition (20–30 dishes)</li>
+                <li>OCR for paper menu photos</li>
+                <li>Personalized meal suggestions</li>
+              </ul>
+            </article>
+            <article class="card">
+              <span class="tag tag--dark">Phase 3</span>
+              <h4>Analytics + Growth</h4>
+              <ul>
+                <li>Peak hour & revenue charts</li>
+                <li>Popular dish insights</li>
+                <li>Customer sentiment tracking</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="flows" class="section section--alt">
+        <div class="container">
+          <div class="section__title">
+            <h3>Core User Roles & Flows</h3>
+            <p>Three clean roles keep development simple and easy to explain.</p>
+          </div>
+
+          <div class="tabs">
+            <button class="tab tab--active" data-tab="restaurant">Restaurant Admin</button>
+            <button class="tab" data-tab="customer">Customer</button>
+            <button class="tab" data-tab="system">System Admin</button>
+          </div>
+
+          <div class="tab-panel tab-panel--active" id="restaurant">
+            <div class="grid grid--2">
+              <article class="card">
+                <h4>Registration Flow</h4>
+                <ol>
+                  <li>Create restaurant profile with hours + contact.</li>
+                  <li>Upload dish images, ingredients, calories, price.</li>
+                  <li>Generate QR code linked to live menu.</li>
+                </ol>
+              </article>
+              <article class="card">
+                <h4>Operations Flow</h4>
+                <ol>
+                  <li>Confirm table bookings in real time.</li>
+                  <li>Accept pre-orders & mark availability.</li>
+                  <li>Review feedback and star ratings.</li>
+                </ol>
+              </article>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="customer">
+            <div class="grid grid--2">
+              <article class="card">
+                <h4>QR Menu Flow</h4>
+                <ol>
+                  <li>Scan restaurant QR code.</li>
+                  <li>Browse dishes with ingredients + calories.</li>
+                  <li>Add items to cart & place order.</li>
+                </ol>
+              </article>
+              <article class="card">
+                <h4>Booking Flow</h4>
+                <ol>
+                  <li>Select date, time, guests.</li>
+                  <li>Receive confirmation instantly.</li>
+                  <li>Leave a rating after dining.</li>
+                </ol>
+              </article>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="system">
+            <div class="grid grid--2">
+              <article class="card">
+                <h4>Governance</h4>
+                <ul>
+                  <li>Verify new restaurants.</li>
+                  <li>Monitor compliance & data quality.</li>
+                  <li>Run dashboards for platform insights.</li>
+                </ul>
+              </article>
+              <article class="card">
+                <h4>Support</h4>
+                <ul>
+                  <li>Manage complaints and dispute resolution.</li>
+                  <li>Track system uptime and SLA.</li>
+                  <li>Maintain payment gateway configs.</li>
+                </ul>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ui" class="section">
+        <div class="container">
+          <div class="section__title">
+            <h3>Frontend UI Blueprint</h3>
+            <p>Mocked screens aligned with your final-year project objectives.</p>
+          </div>
+
+          <div class="grid grid--3">
+            <article class="card card--highlight">
+              <h4>Restaurant Registration</h4>
+              <p>Collect restaurant details and generate the unique QR link.</p>
+              <form class="form">
+                <label>
+                  Restaurant Name
+                  <input type="text" placeholder="Spice Garden" />
+                </label>
+                <label>
+                  Location
+                  <input type="text" placeholder="City, Neighborhood" />
+                </label>
+                <label>
+                  Upload Menu Images
+                  <input type="file" multiple />
+                </label>
+                <button type="button" class="btn btn--primary">Generate QR</button>
+              </form>
+            </article>
+
+            <article class="card">
+              <h4>Dish Upload Card</h4>
+              <div class="dish">
+                <div>
+                  <strong>Grilled Paneer Bowl</strong>
+                  <p>Calories: 480 kcal</p>
+                  <p>Recommended: Fitness, High Protein</p>
+                </div>
+                <span class="pill">Available</span>
+              </div>
+              <div class="dish">
+                <div>
+                  <strong>Mango Chia Pudding</strong>
+                  <p>Calories: 210 kcal</p>
+                  <p>Recommended: Diabetic Friendly</p>
+                </div>
+                <span class="pill pill--warn">Low Stock</span>
+              </div>
+              <div class="qr">
+                <div class="qr__box">QR</div>
+                <div>
+                  <p class="small">https://rms.app/menu/sg-102</p>
+                  <p class="muted">QR updates automatically with new menu items.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="card">
+              <h4>Customer Registration</h4>
+              <p>Capture dietary preferences for personalization.</p>
+              <form class="form">
+                <label>
+                  Full Name
+                  <input type="text" placeholder="Ayesha Rahman" />
+                </label>
+                <label>
+                  Dietary Preference
+                  <select>
+                    <option>Vegetarian</option>
+                    <option>Vegan</option>
+                    <option>Non-Veg</option>
+                    <option>Gluten-Free</option>
+                  </select>
+                </label>
+                <label>
+                  Allergies
+                  <input type="text" placeholder="Peanuts, shellfish" />
+                </label>
+                <button type="button" class="btn btn--secondary">Create Profile</button>
+              </form>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="stack" class="section section--alt">
+        <div class="container">
+          <div class="section__title">
+            <h3>Recommended Tech Stack</h3>
+            <p>Fast to build, easy to explain in viva.</p>
+          </div>
+          <div class="grid grid--3">
+            <article class="card">
+              <h4>Frontend</h4>
+              <p>React.js, Tailwind CSS, html5-qrcode</p>
+            </article>
+            <article class="card">
+              <h4>Backend</h4>
+              <p>Node.js, Express, JWT Auth</p>
+            </article>
+            <article class="card">
+              <h4>Database</h4>
+              <p>MongoDB Collections: Users, Restaurants, Dishes</p>
+            </article>
+            <article class="card">
+              <h4>Images</h4>
+              <p>Cloudinary (free tier) or AWS S3</p>
+            </article>
+            <article class="card">
+              <h4>Payments</h4>
+              <p>COD + Razorpay (single gateway MVP)</p>
+            </article>
+            <article class="card">
+              <h4>Analytics</h4>
+              <p>Chart.js for orders, ratings, and revenue</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container">
+          <div class="section__title">
+            <h3>Database Snapshot</h3>
+            <p>Keep collections minimal for MVP success.</p>
+          </div>
+          <div class="grid grid--2">
+            <article class="card code">
+              <pre>{
+  "restaurant": {
+    "name": "Spice Garden",
+    "location": "Kochi",
+    "menu": ["dishId"],
+    "qrCode": "https://rms.app/menu/sg-102"
+  }
+}</pre>
+            </article>
+            <article class="card code">
+              <pre>{
+  "dish": {
+    "name": "Grilled Paneer Bowl",
+    "ingredients": ["paneer", "herbs"],
+    "calories": 480,
+    "recommendedFor": ["fitness"],
+    "price": 260
+  }
+}</pre>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <div>
+          <h4>RMS Project Notes</h4>
+          <p>Focus on MVP. Ship fast. Then add AI + analytics.</p>
+        </div>
+        <div class="footer__cta">
+          <a class="btn btn--primary" href="#overview">Back to top</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
