@@ -1,0 +1,9 @@
+{
+  "expo": {
+    "name": "RMS Mobile",
+    "slug": "rms-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light"
+  }
+}
